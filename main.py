@@ -15,6 +15,10 @@ logging.basicConfig(level=logging.INFO, filename='app.log',
                     format='%(asctime)s %(levelname)s:%(message)s')
 logger = logging.getLogger(__name__)
 
+@app.get("/hello")
+def read_root():
+    return {"Hello": "World"}
+'''
 class Item(Base):
     __tablename__ = 'items'
     id = Column(Integer, primary_key=True, index=True)
@@ -52,3 +56,4 @@ def read_item(item_id: int):
     except Exception as e:
         logger.error(f"Error retrieving item: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+'''
