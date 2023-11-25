@@ -20,6 +20,10 @@ SessionLocal = sessionmaker(bind=engine)
 
 Base.metadata.create_all(bind=engine)
 
+@app.get("/heatlhcheck")
+def healthcheck():
+    return {"status": "ok"}
+
 @app.post("/items/")
 def create_item(name: str, description: str):
     db = SessionLocal()
