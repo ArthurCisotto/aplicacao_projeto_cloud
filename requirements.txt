@@ -2,3 +2,5 @@ fastapi
 uvicorn
 sqlalchemy
 pymysql
+boto3
+datetime
