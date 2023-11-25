@@ -28,6 +28,12 @@ def create_item(name: str, description: str):
     db.refresh(new_item)
     return new_item
 
+@app.get("/items/")
+def read_items():
+    db = SessionLocal()
+    items = db.query(Item).all()
+    return items
+
 @app.get("/items/{item_id}")
 def read_item(item_id: int):
     db = SessionLocal()
@@ -36,4 +42,26 @@ def read_item(item_id: int):
         raise HTTPException(status_code=404, detail="Item not found")
     return item
 
-# Implementar métodos PUT e DELETE conforme necessário
+@app.put("/items/{item_id}")
+def update_item(item_id: int, name: str, description: str):
+    db = SessionLocal()
+    item = db.query(Item).filter(Item.id == item_id).first()
+    if item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    item.name = name
+    item.description = description
+    db.commit()
+    return item
+
+@app.delete("/items/{item_id}")
+def delete_item(item_id: int):
+    db = SessionLocal()
+    item = db.query(Item).filter(Item.id == item_id).first()
+    if item is None:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    db.delete(item)
+    db.commit()
+    return {"detail": "Item deleted successfully"}
+
