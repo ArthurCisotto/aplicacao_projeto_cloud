@@ -20,7 +20,7 @@ SessionLocal = sessionmaker(bind=engine)
 
 Base.metadata.create_all(bind=engine)
 
-@app.get("/heatlhcheck")
+@app.get("/healthcheck")
 def healthcheck():
     return {"status": "ok"}
 
